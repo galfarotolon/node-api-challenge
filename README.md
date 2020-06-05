@@ -38,15 +38,34 @@ Commit your code regularly and use descriptive messages. This helps both you (in
 
 Demonstrate your understanding of this Sprint's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your Team Lead.
 
-- [ ] Mention two parts of Express that you learned about this week.
+ 1 Mention two parts of Express that you learned about this week.
 
-- [ ] Describe Middleware?
+Express is an awesome framework that allows for simple and extensible code. 
+One part of Express I learned this week is middleware. Express middleware are functions that can be  triggered during a request to the server. 
+Another Express feature is Routing. Routing allows the selection of which request handler function will be executed. Routing provides a way to break an application into smaller parts, making it more modular. Each router can have its own middleware and routing. 
+ 
+ 
+ 2 Describe Middleware?
 
-- [ ] Describe a Resource?
+Express as a framework doesn’t have much to work with on its own. An Express application is essentially built with middleware function calls. 
+Middleware functions are functions that have access to the request and response objects (defined normally as req, res). These can be referred to as the ‘homies’ (at least in Lambda terms). There is surprisingly a third ‘homie’, usually called ‘next’. This last one usually points at the next piece of middleware to be executed.
+ 
+ 
+ 
+3 Describe a Resource?
 
-- [ ] What can the API return to help clients know if a request was successful?
+The core concept of any RESTful API is the resource. A resource is an object with associated data and a set of methods that can be used upon. It is like a common object, but only the methods built for it work, corresponding to the CRUD operations for get, post, put and delete. 
+ 
+ 
+4  What can the API return to help clients know if a request was successful?
 
-- [ ] How can we partition our application into sub-applications?
+The API usually returns HTTP status codes back to its clients. Status codes are commonly separated by their first digit, so for example a status code starting with a 1 is usually informational, whereas a status code that begins with a 2 (i.e. 200) is usually a code that alerts the request was successful. 
+Other common status codes are 400(client side errors) and 500(server-side errors). 
+ 
+ 5 How can we partition our application into sub-applications?
+ 
+We can make our application be modular and therefore make it more manageable in the long-run. This is done by moving sections from the main URL and adding additional information (such as /users) into a new file. Now all the routing that has to do with user data will be a different module and all the subsequent requests will be done there. This allows for easier maintenance and readability for other developers. The only thing left is to require that module into the main server file and call it by using ‘server.use('/api/users', userRouter).’’
+
 
 ## Minimum Viable Product
 
