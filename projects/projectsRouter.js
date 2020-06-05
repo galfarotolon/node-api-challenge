@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
         });
 });
 
-
+//PROJECT
 router.get('/:id', (req, res) => {
     const id = req.params.id
 
@@ -43,6 +43,8 @@ router.get('/:id', (req, res) => {
         });
 });
 
+
+///ACTION 
 router.get('/:id/actions', (req, res) => {
 
     const id = req.params.id
@@ -69,6 +71,8 @@ router.get('/:id/actions', (req, res) => {
 
 //////POST REQUESTS
 
+//PROJECT
+
 router.post('/', (req, res) => {
     const newProject = req.body;
 
@@ -92,7 +96,7 @@ router.post('/', (req, res) => {
     }
 })
 
-
+///ACTION 
 router.post('/:id/actions', (req, res) => {
     const { id } = req.params;
     const action = { ...req.body, project_id: id };
@@ -133,6 +137,8 @@ router.post('/:id/actions', (req, res) => {
 
 //////////////PUT REQUEST
 
+//PROJECT
+
 router.put('/:id', (req, res) => {
     const changes = req.body;
     ProjectDb.update(req.params.id, changes)
@@ -152,7 +158,32 @@ router.put('/:id', (req, res) => {
         });
 });
 
+
+///ACTION 
+router.put('/:id/actions', (req, res) => {
+    const changes = req.body;
+    ActionDb.update(req.params.id, changes)
+        .then(action => {
+            if (action) {
+                res.status(200).json(action);
+            } else {
+                res.status(404).json({ message: "The project with the specified ID does not exist." });
+            }
+        })
+        .catch(error => {
+            // log error to database
+            console.log(error);
+            res.status(500).json({
+                error: "The project information could not be modified.",
+            });
+        });
+})
+
+
+
 /////////DELETE REQUEST
+
+//PROJECT
 
 router.delete('/:id', (req, res) => {
     ProjectDb.remove(req.params.id)
@@ -170,7 +201,29 @@ router.delete('/:id', (req, res) => {
                 error: "The project could not be removed",
             });
         });
+
 });
+
+///ACTION 
+router.delete('/:id/actions', (req, res) => {
+    ActionDb.remove(req.params.id)
+        .then(count => {
+            if (count > 0) {
+                res.status(200).json({ message: 'The action has been deleted.' });
+            } else {
+                res.status(404).json({ message: "The action with the specified ID does not exist." });
+            }
+        })
+        .catch(error => {
+            // log error to database
+            console.log(error);
+            res.status(500).json({
+                error: "The action could not be removed",
+            });
+        });
+
+});
+
 
 
 
